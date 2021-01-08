@@ -8,6 +8,8 @@ window_move(fkey_num) {
 
 	if(ac == "run") {
 		MouseGetPos, window_move_mouse_new_x, window_move_mouse_new_y
+		window_move_mouse_new_x := to_primary_mouse_x(window_move_mouse_new_x)
+
 		dx := window_move_mouse_new_x - window_move_mouse_x
 		dy := window_move_mouse_new_y - window_move_mouse_y
 		if(dx*dx + dy*dy > 400) {
@@ -17,23 +19,31 @@ window_move(fkey_num) {
 			SetTimer, %barrier_timer_label%, Off
 	
 			MouseGetPos, window_move_mouse_x, window_move_mouse_y
+			window_move_mouse_x := to_primary_mouse_x(window_move_mouse_x)
+
 			SetTimer, process_window_move, 20
 		}
 	} else if(ac == "init") {
 		MouseGetPos, window_move_mouse_x, window_move_mouse_y
+		window_move_mouse_x := to_primary_mouse_x(window_move_mouse_x)
+
 	} else if(ac == "end") {
 		SetTimer, process_window_move, Off
 	}
 }
 
 process_window_move:
-WinGetPos, window_move_window_x, window_move_window_y,,, A
 MouseGetPos, window_move_mouse_new_x, window_move_mouse_new_y
-WinMove, A,, window_move_window_x + window_move_mouse_new_x - window_move_mouse_x, window_move_window_y + window_move_mouse_new_y - window_move_mouse_y
+window_move_mouse_new_x := to_primary_mouse_x(window_move_mouse_new_x)
+
+dx := window_move_mouse_new_x - window_move_mouse_x
+dy := window_move_mouse_new_y - window_move_mouse_y
+cmnd = "%A_ScriptDir%\util\CycleWindowMonitor.exe" %dx% %dy% 0 0
+RunWait, %cmnd%,, Hide
+
 window_move_mouse_x := window_move_mouse_new_x
 window_move_mouse_y := window_move_mouse_new_y
 return
-
 
 
 
@@ -47,6 +57,8 @@ window_resize(fkey_num) {
 
 	if(ac == "run") {
 		MouseGetPos, window_resize_mouse_new_x, window_resize_mouse_new_y
+		window_resize_mouse_new_x := to_primary_mouse_x(window_resize_mouse_new_x)
+
 		dx := window_resize_mouse_new_x - window_resize_mouse_x
 		dy := window_resize_mouse_new_y - window_resize_mouse_y
 		if(dx*dx + dy*dy > 400) {
@@ -56,10 +68,13 @@ window_resize(fkey_num) {
 			SetTimer, %barrier_timer_label%, Off
 
 			MouseGetPos, window_resize_mouse_x, window_resize_mouse_y
+			window_resize_mouse_x := to_primary_mouse_x(window_resize_mouse_x)
+
 			SetTimer, process_window_resize, 20
 		}
 	} else if (ac == "init") {
 		MouseGetPos, window_resize_mouse_x, window_resize_mouse_y
+		window_resize_mouse_x := to_primary_mouse_x(window_resize_mouse_x)
 	} else if (ac == "end") {
 		SetTimer, process_window_resize, Off
 	}
@@ -67,12 +82,16 @@ window_resize(fkey_num) {
 
 process_window_resize:
 MouseGetPos, window_resize_mouse_new_x, window_resize_mouse_new_y
-WinGetPos,,, window_resize_window_width, window_resize_window_height, A
-WinMove, A,,,, window_resize_window_width + window_resize_mouse_new_x - window_resize_mouse_x, window_resize_window_height + window_resize_mouse_new_y - window_resize_mouse_y
+window_resize_mouse_new_x := to_primary_mouse_x(window_resize_mouse_new_x)
+
+dw := window_resize_mouse_new_x - window_resize_mouse_x
+dh := window_resize_mouse_new_y - window_resize_mouse_y
+cmnd = "%A_ScriptDir%\util\CycleWindowMonitor.exe" 0 0 %dw% %dh%
+RunWait, %cmnd%,, Hide
+
 window_resize_mouse_x := window_resize_mouse_new_x
 window_resize_mouse_y := window_resize_mouse_new_y
 return
-
 
 
 

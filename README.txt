@@ -71,6 +71,10 @@ For details, read below
 
 ///////////////////////////////////// How to install //////////////////////////////////////// 
 
+ * Put the needed utilities (see github):
+	CycleWindowMonitor
+   into util/
+	
  * Run install.sh with bash (e.g. with cygwin) from the root directory (do not run from outside the root directory!)
 
  * To run the script, run ButtonMultiplier.ahk
