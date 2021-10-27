@@ -2,6 +2,8 @@
 #KeyHistory 0
 #MaxHotkeysPerInterval 500
 ListLines Off
+
+DllCall("SetThreadDpiAwarenessContext", "ptr", -3, "ptr")
 CoordMode, Mouse, Screen
 
 #Include %A_ScriptDir%
