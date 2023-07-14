@@ -24,6 +24,9 @@ For details, read below
 	- FButtons: add the number of each F-key that should be recognized by the script, separated by spaces (no new lines!).
 	  Only values from 1 to 24 are allowed
 
+	- NOTE: AutoHotkey.exe may need to be configured to run as Administrator for some functionality
+	  (Properties > Compatibility > "Run as Administrator" checkmark).
+
  * Add profiles to user\profiles\
 
 	- The filename can be anything, but must end in ".ahk" (except "Default.ahk" which must exist)
